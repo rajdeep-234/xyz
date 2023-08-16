@@ -1,0 +1,30 @@
+class A:
+    def __init__(self,data):
+        self.data=data
+    def Print(self):
+        print("A:",self.data)
+class B(A):
+    def __init__(self, data):
+        super().__init__(data)
+    def Print_child_1(self):
+        print('B:',self.data)
+class C(A):
+    def __init__(self, data):
+        super().__init__(data)
+    def Print_Child_2(self):
+        print("C:",self.data)
+class D(B,C):
+    def __init__(self,data):
+        B.__init__(self,data)
+        C.__init__(self,data)
+    def Print_ultimate_child(self):
+        print("D:",self.data*self.data)
+
+a=A(4)
+a.Print()
+b=B(4)
+b.Print_child_1()
+c=C(4)
+c.Print_Child_2()
+d=D(4)
+d.Print_ultimate_child()
