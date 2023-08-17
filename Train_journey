@@ -1,0 +1,24 @@
+#I live in Habra which is a town in Bongaon line . Now I'm going to start my journey from here to Gobardanga which is later 2 stations from Habra.So Let's start
+#Type-1
+class Train_journey:
+    def __init__(self):
+        self.Stations=["Sanhati","Machhalandapur","Gobardanga"]
+        self.index=-1 #Now in Habra
+    def __iter__(self):
+        return self
+    def __next__(self):
+        self.index=self.index+1 #Journey is going on
+        return self.Stations[self.index]
+
+t=Train_journey()
+itr=iter(t)
+print(next(itr))
+print(next(itr))
+print(next(itr))
+#Upto the statement,the code runs successfully and returns the expected output 
+print(next(itr))# At the end, it shows an Exception Type of IndexError:List Index is out of range .
+
+#So if an Exception raises , what to do to handle it,will see in Type-2.
+
+
+
