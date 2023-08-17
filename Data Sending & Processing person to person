@@ -1,0 +1,31 @@
+#Let,Person1 has a data . He shares the data to the next two persons Person2 and Person3.Then Person2 and Person3 shares their data to the Person4 and he'll multiply the data
+class Person_1:
+    def __init__(self,data):
+        self.data=data
+    def Print(self):
+        print("Person_1:",self.data)
+class Person_2(Person_1):
+    def __init__(self, data):
+        super().__init__(data)
+    def Share_1(self):
+        print("Person_2:",self.data)
+class Person_3(Person_1):
+    def __init__(self, data):
+        super().__init__(data)
+    def Share_2(self):
+        print("Person_3:",self.data)
+class Person_4(Person_2,Person_3):
+    def __init__(self,data):
+        Person_2.__init__(self,data)
+        Person_3.__init__(self,data)
+    def Multiply_process(self):
+        print("Person_4:",self.data*self.data)
+
+p1=Person_1(4)
+p1.Print()
+p2=Person_2(4)
+p2.Share_1()
+p3=Person_3(4)
+p3.Share_2()
+p4=Person_4(4)
+p4.Multiply_process()
