@@ -1,0 +1,17 @@
+#We have a sphere of 7 unit.We want to make a cylinder of 5 unit from the sphere.
+class Sphere:
+    def __init__(self,radius):
+        self.radius=radius
+    def Volume(self):
+        print("Volume_of_sphere:",(4/3)*math.pi*(self.radius**3))
+class Cylinder(Sphere):
+    def __init__(self, radius,height):
+        super().__init__(radius)
+        self.height=height
+    def Volume(self):
+        print("Volume_of_cylinder:",math.pi*(self.radius**2)*self.height)
+
+sp=Sphere(7)
+sp.Volume()
+cyl=Cylinder(7,5)
+cyl.Volume()
