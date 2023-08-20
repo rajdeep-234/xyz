@@ -1,16 +1,1 @@
-#Check the array is sorted or not using Command line Argument
-import argparse
-import ast
-parser1=argparse.ArgumentParser()
-parser1.add_argument("arr",help="arr")
-parser1.parse_args()
-print(parser1.parse_args().arr)
-a1=ast.literal_eval(parser1.parse_args().arr)
-result=None
-def issorted(arr):
-      return all(arr[i]<=arr[i+1] for i in range(len(arr)-1))
-if(issorted(a1)==True):
-      result=a1
-else:
-      result=sorted(a1)
-print(result)
+
