@@ -1,0 +1,15 @@
+# By using python generator,we can build a data cycle
+
+def data_cycle():
+    a,b,c=1,2,3
+    i=0
+    while(i<=3):
+        yield a
+        yield b
+        yield c
+        i=i+1
+        a,b,c=c,a,b
+
+data_cycle()
+for d in data_cycle():
+    print(d)
