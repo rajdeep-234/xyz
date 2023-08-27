@@ -2,25 +2,25 @@ from collections import deque
 class Food_Order:
     def __init__(self):
         self.queue=deque()
-    def Place_Order(self,arr):
+    def Place_order(self,arr):
         for foods in arr:
             self.queue.appendleft(foods)
             print(self.queue)
             time.sleep(0.5)
-    def Serve_Order(self):
+    def Serve_order(self):
         while(len(self.queue)>0):
             print(self.queue.pop())
             time.sleep(2)
-        if(len(self.queue)<=0):
-            try:
-                raise Exception('All served')
-            except Exception as e:
-                print(e)
+            if(len(self.queue)<=0):
+                break
 if __name__=='__main__':
     q=Food_Order()
-    orders=["pizza","samosa","pasta","biryani","burger"]
+    orders=['pizza','samosa','pasta','biryani','burger']
     t=time.time()
-    t1=threading.Thread(target=q.Place_Order,args=(orders,))
-    t2=threading.Thread(target=q.Serve_Order)
+    t1=threading.Thread(target=q.Place_order,args=(orders,))
+    t2=threading.Thread(target=q.Serve_order)
     t1.start()
     t2.start()
+    t2.join(1)
+    t1.join(1)
+    print("Done in:",t-time.time())
