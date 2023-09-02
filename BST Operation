@@ -1,0 +1,94 @@
+class BSTNode:
+    def __init__(RootNode,data):
+        RootNode.data=data
+        RootNode.left=None
+        RootNode.right=None
+    def __add__child__(RootNode,data1):
+        if data1==RootNode.data:
+            return
+        if data1<RootNode.data:
+            if RootNode.left:
+                RootNode.left.__add__child__(data1)
+            else:
+                node1=BSTNode(data1)
+                RootNode.left=node1
+        else:
+            if RootNode.right:
+                RootNode.right.__add__child__(data1)
+            else:
+                node1=BSTNode(data1)
+                RootNode.right=node1
+    def preorder_trav(RootNode):
+        elements=[]
+        elements.append(RootNode.data)
+        if RootNode.left:
+            elements=elements+RootNode.left.preorder_trav()
+        if RootNode.right:
+            elements=elements+RootNode.right.preorder_trav()
+        return elements
+    def inorder_trav(RootNode):
+        elements=[]
+        if RootNode.left:
+            elements=elements+RootNode.left.inorder_trav()
+        elements.append(RootNode.data)
+        if RootNode.right:
+            elements=elements+RootNode.right.inorder_trav()
+        return elements
+    def postorder_trav(RootNode):
+        elements=[]
+        if RootNode.left:
+            elements=elements+RootNode.left.postorder_trav()
+        if RootNode.right:
+            elements=elements+RootNode.right.postorder_trav()
+        elements.append(RootNode.data)
+        return elements
+    def search_for(RootNode,value):
+        if value==RootNode.data:
+            return True
+        if value<RootNode.data:
+            if RootNode.left:
+                return RootNode.left.search_for(value)
+            else:
+                return False
+        if value>RootNode.data:
+            if RootNode.right:
+                return RootNode.right.search_for(value)
+            else:
+                return False
+    def find_min(RootNode):
+        if RootNode.left:
+            return RootNode.left.find_min()
+        else:
+            return RootNode.data
+    def find_max(RootNode):
+        if RootNode.right:
+            return RootNode.right.find_max()
+        else:
+            return RootNode.data
+    def calculate_sum(RootNode):
+        if (RootNode.left and RootNode.right):
+            return RootNode.data+RootNode.left.calculate_sum()+RootNode.right.calculate_sum()
+        if RootNode.left:
+            return RootNode.data+RootNode.left.calculate_sum()
+        else:
+            if RootNode.right:
+                return RootNode.data+RootNode.right.calculate_sum()
+            else:
+                return RootNode.data
+
+
+def build_tree(element):
+    root=BSTNode(element[0])
+    for i in range(1,len(element)):
+        root.__add__child__(element[i])
+    return root
+if __name__=='__main__':
+    element=[7,3,5,4,9,6,8]
+    num_tree=build_tree(element)
+    print(num_tree.search_for(5))
+    print("Minimum element of the Number-Tree:",num_tree.find_min())
+    print("Maximum element of the Number:",num_tree.find_max())
+    print("Sum:",num_tree.calculate_sum())
+    print("Preorder Traversal:", num_tree.preorder_trav())
+    print("Inorder Traversal:",num_tree.inorder_trav())
+    print("Postorder Traversal:",num_tree.postorder_trav())
