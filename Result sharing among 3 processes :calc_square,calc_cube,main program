@@ -1,0 +1,27 @@
+import time
+import multiprocessing
+
+
+def calc_sqr(numbers,square_values):
+    for idx,n in enumerate(numbers):
+        square_values[idx]=n*n
+    print("inside of calc_sqr process result1:",square_values[:])
+
+def calc_cube(numbers,cube_values):
+    for idx,n in enumerate(numbers):
+        cube_values[idx]=n*n*n
+    print("in calc_cube process result2:", cube_values[:])
+
+if __name__=='__main__':
+    arr=[2,3,8,9]
+    square_values=multiprocessing.Array('i',4)
+    cube_values=multiprocessing.Array('i',4)
+    # value=multiprocessing.Value('d',0.0)
+    p1=multiprocessing.Process(target=calc_sqr,args=(arr,square_values))
+    p2=multiprocessing.Process(target=calc_cube,args=(arr,cube_values))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+    print("outside of calc_sqr:",square_values[:])
+    print("outside of calc_cube:",cube_values[:])
