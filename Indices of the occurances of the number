@@ -1,0 +1,22 @@
+'''Find index of all the occurances of a number from sorted list'''
+def Find_index_of_all_occ(numbers,element):
+    start=0
+    end=len(numbers)-1
+    indices=set()
+    while(start<=end):
+        mid=math.floor(start+((end-start)/2))
+        if (numbers[mid]==element):
+            indices.add(mid)
+            start=mid+1
+        elif(numbers[mid]<element):
+            start=mid+1
+        elif(numbers[mid]>element):
+            end=mid-1
+        if (start > end):
+            start = 0
+            end = end - 1
+    return indices
+if __name__=='__main__':
+    arr=[1,4,6,9,11,15,15,15,17,21,34,34,56]
+    res=Find_index_of_all_occ(arr,15)
+    print(res)
