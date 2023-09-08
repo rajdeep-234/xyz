@@ -1,0 +1,44 @@
+'''We know the time complexity of Linear Search is O(n) and the time complexity of Binary Search is O(log(n))
+Now we check time consumption of two Algorithms and compare them by writing code
+'''
+
+def time_it(func):
+    def wrapper(*args,**kwargs):
+        start=time.time()
+        result=func(*args,**kwargs)
+        end=time.time()
+        print(func.__name__+':'+str((end-start)*1000)+'ms')
+        return result
+    return wrapper
+@time_it
+def Linear_search(arr,element):
+    for index,ele in enumerate(arr):
+        if element==ele:
+            return index
+    return -1
+@time_it
+def Binary_search(arr,start,end,element):
+    while(start<=end):
+        mid=math.floor(start+((end-start)/2))
+        if(element==arr[mid]):
+            return mid
+        elif(element<arr[mid]):
+            end=mid-1
+        elif(element>arr[mid]):
+            start=mid+1
+        if(start>end):
+            try:
+                raise Exception('No such element in the arr')
+            except Exception as e:
+                print(e)
+if __name__=='__main__':
+    arr=[3,4,5,6,7,8]
+    res1=Linear_search(arr,7)
+    print(res1)
+    res2=Binary_search(arr,0,len(arr)-1,7)
+    print(res2)
+'''We observed:
+   Linear_search:43364.13621902466ms
+   Binary_search:39920.85289955139ms
+   So we can tell that Binary Search is Better than Linear Search
+   '''
