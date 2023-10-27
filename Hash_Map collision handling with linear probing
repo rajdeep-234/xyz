@@ -1,0 +1,44 @@
+class Hash_Table:
+    def __init__(hash):
+        hash.MAX=13
+        hash.arr=[[] for i in range(hash.MAX)]
+    def hash_func(hash,key):
+        h=0
+        for char in key:
+            h=h+ord(char)
+        return h%hash.MAX
+    def insert_at_hash(hash,key,value):
+        h=hash.hash_func(key)
+        for j in range(hash.MAX):
+           i=0
+           if hash.arr[h]:
+               i=i+1
+               h=(h+i)%hash.MAX
+           else:
+               hash.arr[h].append((key,value))
+               break
+    def get_value(hash,key):
+        h=hash.hash_func(key)
+        for idx,element in enumerate(hash.arr[h]):
+            if len(element)==2 and element[0]==key:
+                return element[1]
+    def del_value(hash,key):
+        h=hash.hash_func(key)
+        del hash.arr[h]
+if __name__=='__main__':
+    Hash=Hash_Table()
+    Hash.hash_func('6-Mar')
+    Hash.insert_at_hash('6-Mar',310.0)
+    Hash.insert_at_hash('7-Mar',340.0)
+    Hash.insert_at_hash('8-Mar',380.0)
+    Hash.insert_at_hash('9-Mar',302.0)
+    Hash.insert_at_hash('10-Mar',297.0)
+    print(Hash.get_value('6-Mar'))
+    print(Hash.get_value('7-Mar'))
+    print(Hash.get_value('8-Mar'))
+    print(Hash.get_value('9-Mar'))
+    print(Hash.get_value('10-Mar'))
+    #Hash.del_value('10-Mar')
+    Hash.insert_at_hash('3-Apr',268.0)
+    Hash.insert_at_hash('4-Apr',270.0)
+    print(Hash.arr)
