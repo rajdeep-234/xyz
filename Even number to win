@@ -2,7 +2,7 @@
 #include<conio.h>
 int main(){
     int n=3,i=1,x;
-    printf("Enter a number:");
+    printf("Enter an even number:");
     scanf("%d",&x);
     while (i<=n)//You have been given atmost 3 chances.
     {
