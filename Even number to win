@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<conio.h>
+int main(){
+    int n=3,i=1,x;
+    printf("Enter a number:");
+    scanf("%d",&x);
+    while (i<=n)//You have been given atmost 3 chances.
+    {
+        if (x%2==0)//whether you have entered an even number.
+        {
+            printf("Win the Game!");
+            break;
+        }
+        else//You have entered an odd number
+        {
+            if (i==n)//Was it your last chance?
+            {
+                printf("Sorry,Lose the Game!");
+                break;
+            }
+            i++;//You have been given another chance
+            printf("Enter again:");
+            scanf("%d",&x);
+        }  
+    }
+    getch();
+} 
