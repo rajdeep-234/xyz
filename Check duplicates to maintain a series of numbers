@@ -1,0 +1,83 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+struct ArrayADT
+{
+    int capacity;
+    int lastindex;
+    int *ptr;
+};
+struct ArrayADT *CreateArray(int capacity){
+    struct ArrayADT *arrptr;
+    arrptr=(struct ArrayADT*)malloc(sizeof(struct ArrayADT));
+    (*arrptr).capacity=capacity;
+    (*arrptr).lastindex=-1;
+    (*arrptr).ptr=(int*)calloc((*arrptr).capacity,sizeof(int));
+    return arrptr;
+}
+void setitem(struct ArrayADT *arrptr, int index, int item){
+    if(index<0 || index>(*arrptr).lastindex+1){
+        printf("Invalid Index");
+        return;
+    }
+    if ((*arrptr).lastindex==(*arrptr).capacity-1)
+    {
+        printf("Overflow");
+        return;
+    }
+    if(index<=(*arrptr).lastindex){
+        for (int i = (*arrptr).lastindex; i>=index; i--)
+        {
+            *((*arrptr).ptr+(i+1))=*((*arrptr).ptr+i);
+        }
+        *((*arrptr).ptr+index)=item;
+        (*arrptr).lastindex+=1;
+        return;
+    }
+    if (index==(*arrptr).lastindex+1)
+    {
+        *((*arrptr).ptr+index)=item;
+        (*arrptr).lastindex+=1;
+        return;
+    }
+}
+int main(){
+    int x,i=0,j;
+    struct ArrayADT *arrptr;
+    arrptr=CreateArray(8);
+    while (i<(*arrptr).capacity)
+    {
+        printf("Enter a number:");
+        scanf("%d",&x);
+        if ((*arrptr).lastindex==-1)
+        {
+            setitem(arrptr,i,x);
+            i++;
+        }
+        else{
+            j=0;
+            while (j<i)
+            {
+                if (x^*((*arrptr).ptr+j))
+                {
+                    if (j==(*arrptr).lastindex)
+                    {
+                        setitem(arrptr,i,x);
+                        i++;
+                        break;
+                    }
+                    else
+                    {
+                        j++;
+                    }
+                }
+                else
+                {
+                    printf("You've entered a duplicate number\n");
+                    break;
+                }
+            }
+        }
+    }
+    getch();
+}
