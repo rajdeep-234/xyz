@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+int main(){
+    int correct,guessed;
+    printf("Enter a number:");
+    correct=rand();
+    while (1)
+    {
+        scanf("%d",&guessed);
+        if (guessed==correct)
+        {
+            printf("Correct Answer!\n");
+            break;
+        }
+        else
+        {
+            if (guessed<correct)
+            {
+                printf("Correct Number is greater than the Guessed:");
+            }
+            else
+            {
+                printf("Correct Number is less than the Guessed.");
+            }
+            printf("Enter Again:");
+        }
+    }
+    getch();
+}
