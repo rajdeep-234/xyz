@@ -3,9 +3,9 @@
 int main(){
     int n=3,i=1,x;
     printf("Enter an even number:");
-    scanf("%d",&x);
     while (i<=n)//You have been given atmost 3 chances.
     {
+        scanf("%d",&x);
         if (x%2==0)//whether you have entered an even number.
         {
             printf("Win the Game!");
@@ -20,7 +20,6 @@ int main(){
             }
             i++;//You have been given another chance
             printf("Enter again:");
-            scanf("%d",&x);
         }  
     }
     getch();
