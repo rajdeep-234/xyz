@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<stdlib.h>
+int main(){
+  int chance,x,score=0,i;
+  printf("Enter Chance:");
+  scanf("%d",&chance);
+  for ( i = 1; i <= chance; i++)
+  {
+    printf("Enter a number:");
+    scanf("%d",&x);
+    if (x==0)
+    {
+      score--;
+    }
+    else
+    {
+      if (x>0)
+      {
+        score=score+x;
+      }
+      else
+      {
+        printf("Negative not allowed!");
+      }
+    }
+  }
+  printf("Score is:%d",score);
+  getch();
+} 
