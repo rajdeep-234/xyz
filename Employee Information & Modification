@@ -1,0 +1,159 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#define STRING_LENGTH 5
+#define MAX_EMP 5
+struct Employee
+{
+    int id;
+    char name[STRING_LENGTH];
+    float salary;
+};
+struct EmployeeADT
+{
+    int max_emp;
+    int last_joined_at;
+    struct Employee *emparr;
+    int removed_emp;
+};
+struct EmployeeADT *createEmployee(int max_emp){
+    struct EmployeeADT *empptr;
+    empptr=(struct EmployeeADT*)malloc(sizeof(struct EmployeeADT));
+    empptr->max_emp=max_emp;
+    empptr->last_joined_at=-1;
+    empptr->emparr=(struct Employee*)calloc(empptr->max_emp,sizeof(struct Employee));
+    empptr->removed_emp=0;
+    return empptr;
+}
+int enteremployees(struct EmployeeADT *empptr,int index,struct Employee data){
+    if (empptr->last_joined_at==empptr->max_emp-1)
+    {
+        printf("No vacancy!");
+        return 0;
+    }
+    if (index<0 || index>empptr->last_joined_at+1)
+    {
+        printf("Invalid Entering!");
+        return 0;
+    }
+    if (index<=empptr->last_joined_at)
+    {
+        int i;
+        for ( i = empptr->last_joined_at; i >= index; i--)
+        {
+            empptr->emparr[i+1]=empptr->emparr[i];
+        }
+        empptr->emparr[i+1]=data;
+        empptr->last_joined_at=empptr->last_joined_at+1;
+        return 1;
+    }
+    if (index==empptr->last_joined_at+1)
+    {
+        empptr->emparr[index]=data;
+        empptr->last_joined_at=empptr->last_joined_at+1;
+        return 1;
+    }
+}
+struct Employee *displayemployees(struct EmployeeADT *empptr,int index){
+    if (index<0 || index>empptr->last_joined_at)
+    {
+        printf("No element found!");
+        return NULL;
+    }
+    return &empptr->emparr[index];
+}
+int editsalary(struct EmployeeADT *empptr,int index,float salaryhike){
+    if (empptr->last_joined_at==-1)
+    {
+        printf("Empty Record!");
+        return 0;
+    }
+    if (index<0 || index>empptr->last_joined_at)
+    {
+        printf("Invalid Editing!");
+        return 0;
+    }
+    empptr->emparr[index].salary=empptr->emparr[index].salary+salaryhike;
+    return 1;
+}
+int removeemployees(struct EmployeeADT *empptr,int index){
+    int i;
+    if (empptr->last_joined_at==-1)
+    {
+        printf("No Employee is here to remove!");
+        return 0;
+    }
+    if (index<0 || index>empptr->last_joined_at)
+    {
+        printf("Invalid Removing!");
+        return 0;
+    }
+    for (i = index+1; i <= empptr->last_joined_at+1; i++)
+    {
+        empptr->emparr[i-1]=empptr->emparr[i];
+    }
+    empptr->last_joined_at=empptr->last_joined_at-1;
+    empptr->removed_emp=empptr->removed_emp+1;
+    return 1;
+}
+void sortbyid(struct EmployeeADT *empptr){
+    int i,j;
+    struct Employee temp;
+    for ( i = 1; i <= empptr->last_joined_at; i++)
+    {
+        temp=empptr->emparr[i];
+        for (j = i-1; j>=0; j--)
+        {
+            if (temp.id<empptr->emparr[j].id)
+            {
+                empptr->emparr[j+1]=empptr->emparr[j];
+            }
+            else
+            {
+                break;
+            }
+        }
+        empptr->emparr[j+1]=temp;
+    } 
+}
+int main(){
+    struct EmployeeADT *empptr;
+    struct Employee *emparr;
+    empptr=createEmployee(MAX_EMP);
+    int i;
+    struct Employee d1={103,"ANIL",25000.00};
+    enteremployees(empptr,0,d1);
+    struct Employee d2={101,"AJAY",30000.00};
+    enteremployees(empptr,1,d2);
+    struct Employee d3={102,"ABHI",32000.00};
+    enteremployees(empptr,2,d3);
+    printf("\nBefore Removing:\n");
+    for ( i = 0; i < empptr->last_joined_at+1; i++)
+    {
+        emparr=displayemployees(empptr,i);
+        printf("id=%d Name=%s Salary=%.2f",emparr->id,emparr->name,emparr->salary);
+        printf("\n");
+    }
+    printf("Now the number of employees:%d",empptr->last_joined_at+1);
+    sortbyid(empptr);
+    printf("\nAfter sorting by id the names are:\n");
+    for ( i = 0; i < empptr->last_joined_at+1; i++)
+    {
+        emparr=displayemployees(empptr,i);
+        printf("Name=%s\n",emparr->name);
+    }
+    emparr=displayemployees(empptr,0);
+    printf("Before hiking Ajay's salary was:%.2f",emparr->salary);
+    editsalary(empptr,0,4000.00);
+    printf("\nAfter hiking Ajay's salary is:%.2f",emparr->salary);
+    removeemployees(empptr,2);
+    printf("\nAfter Removing:\n");
+    for ( i = 0; i < empptr->last_joined_at+1; i++)
+    {
+        emparr=displayemployees(empptr,i);
+        printf("id=%d Name=%s Salary=%.2f",emparr->id,emparr->name,emparr->salary);
+        printf("\n");
+    }
+    printf("Now the number of employees:%d",empptr->last_joined_at+1);
+    getch();
+}
