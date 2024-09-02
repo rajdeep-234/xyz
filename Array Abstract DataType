@@ -1,0 +1,153 @@
+#include<stdio.h>
+#include<string.h>
+#include<conio.h>
+#include<math.h>
+#include<stdlib.h>
+struct  ArrayADT
+{
+    int capacity;
+    int lastindex;
+    int *arr;
+};
+struct ArrayADT *createArray(int capacity){
+    struct ArrayADT *arrptr;
+    arrptr=(struct ArrayADT*)malloc(sizeof(struct ArrayADT));
+    arrptr->capacity=capacity;
+    arrptr->lastindex=-1;
+    arrptr->arr=(int*)calloc(arrptr->capacity,sizeof(int));
+    return arrptr;
+}
+int setitem(struct ArrayADT *arrptr,int index,int item){
+    if(arrptr->lastindex==arrptr->capacity-1){
+        printf("Array is Full!");
+        return 0;
+    }
+    if (index<0 || index>arrptr->lastindex+1)
+    {
+        printf("Invalid ValueSetting!");
+        return 0;
+    }
+    if (index<=arrptr->lastindex)
+    {
+        int i;
+        for ( i = arrptr->lastindex; i>=index; i--)
+        {
+            arrptr->arr[i+1]=arrptr->arr[i];
+        }
+        arrptr->arr[i+1]=item;
+        arrptr->lastindex=arrptr->lastindex+1;
+        return 1;
+    }
+    if (index==arrptr->lastindex+1)
+    {
+        arrptr->arr[index]=item;
+        arrptr->lastindex=arrptr->lastindex+1;
+        return 1;
+    }
+}
+int getitem(struct ArrayADT *arrptr,int index){
+    if (index<0 || index>arrptr->lastindex)
+    {
+        printf("Invalid Index");
+        return -1;
+    }
+    return arrptr->arr[index];
+}
+int countitem(struct ArrayADT *arrptr){
+    int count;
+    count=arrptr->lastindex+1;
+    return count;
+}
+int edititem(struct ArrayADT *arrptr,int index,int newValue){
+    if (index<0 || index>arrptr->lastindex)
+    {
+        printf("Editing Not Possible!");
+        return 0;
+    }
+    arrptr->arr[index]=newValue;
+    return 1;
+}
+int removeitem(struct ArrayADT *arrptr,int index){
+    if (arrptr->lastindex==-1)
+    {
+        printf("Array is Empty!");
+        return 0;
+    }
+    if (index>=0 && index<=arrptr->lastindex)
+    {
+        int i;
+        for ( i = index+1; i <= arrptr->lastindex+1 ; i++)
+        {
+            arrptr->arr[i-1]=arrptr->arr[i];
+        }
+        arrptr->lastindex=arrptr->lastindex-1;
+        return 1;
+    }
+    else
+    {
+        printf("Removing Not Possible!");
+        return 0;
+    }
+    
+}
+int search(struct ArrayADT *arrptr,int item){
+    int i;
+    if (arrptr->lastindex==-1)
+    {
+        return -1;
+    }
+    
+    for ( i = 0; i <= arrptr->lastindex; i++)
+    {
+        if (arrptr->arr[i]==item)
+        {
+            return i;
+        } 
+    }
+    return -1;
+}
+void sort(struct ArrayADT *arrptr){
+    int i,j,temp;
+    for ( i = 1; i <= arrptr->lastindex; i++)
+    {
+        temp=arrptr->arr[i];
+        for (j = i-1; j >= 0; j--)
+        {
+            if (temp<arrptr->arr[j])
+            {
+                arrptr->arr[j+1]=arrptr->arr[j];
+            }
+            else
+            {
+                break;
+            }
+            
+        }
+        arrptr->arr[j+1]=temp;
+    }
+}
+int main(){
+    struct ArrayADT *arrptr;
+    arrptr=createArray(9);
+    int i;
+    setitem(arrptr,0,1);
+    setitem(arrptr,1,1);
+    setitem(arrptr,2,2);
+    setitem(arrptr,3,3);
+    setitem(arrptr,4,5);
+    setitem(arrptr,5,6);
+    setitem(arrptr,6,7);
+    printf("Input %d elements in the array:",arrptr->lastindex+1);
+    for ( i = 0; i <= arrptr->lastindex; i++)
+    {
+        printf("\nelement-%d:%d",i,arrptr->arr[i]);
+    }
+    printf("Elements in array are:");
+    for ( i = 0; i <= arrptr->lastindex; i++)
+    {
+        printf("%d ",arrptr->arr[i]);
+    }
+    free(arrptr->arr);
+    free(arrptr);
+    getch();
+}
